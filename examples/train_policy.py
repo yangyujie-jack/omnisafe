@@ -45,13 +45,6 @@ if __name__ == '__main__':
         help='number of paralleled progress for calculations.',
     )
     parser.add_argument(
-        '--total-steps',
-        type=int,
-        default=10000000,
-        metavar='STEPS',
-        help='total number of steps to train for algorithm',
-    )
-    parser.add_argument(
         '--device',
         type=str,
         default='cpu',
@@ -59,18 +52,11 @@ if __name__ == '__main__':
         help='device to use for training',
     )
     parser.add_argument(
-        '--vector-env-nums',
+        '--seed',
         type=int,
-        default=1,
-        metavar='VECTOR-ENV',
-        help='number of vector envs to use for training',
-    )
-    parser.add_argument(
-        '--torch-threads',
-        type=int,
-        default=16,
-        metavar='THREADS',
-        help='number of threads to use for torch',
+        default=None,
+        metavar='SEED',
+        help='random seed for training',
     )
     args, unparsed_args = parser.parse_known_args()
     keys = [k[2:] for k in unparsed_args[0::2]]
@@ -84,6 +70,7 @@ if __name__ == '__main__':
     agent = omnisafe.Agent(
         args.algo,
         args.env_id,
+        seed=args.seed,
         train_terminal_cfgs=vars(args),
         custom_cfgs=custom_cfgs,
     )
